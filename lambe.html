@@ -1,0 +1,133 @@
+<html>
+<head>
+	<title>MBL</title>
+	<meta charset="UTF-8">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script id="angularScript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+	<script src="js/html2canvas.js"></script>
+</head>
+<style type="text/css">
+
+	/* Import fonts */
+	@font-face {
+		font-family: 'PanicStricken';
+		src: url('fonts/PanicStricken.ttf'); /* IE9 Compat Modes */
+	}
+
+	#flag{
+		text-align: center;
+	}
+	.flag { 
+		position: relative; 
+		max-width: 1000px;
+		width: 100%; 
+	}
+	.flag img{
+		max-width: 1000px;
+	}
+	.city { 
+		font-family: 'PanicStricken';
+		text-transform: uppercase;
+		position: absolute; 
+		top: 350px; 
+		left: 0; 
+		width: 100%; 
+		color: #000;
+		font-size: 150px;
+	}
+	.city-medium{
+		font-size: 105px;
+		top: 420px;
+	}
+	.city-larger{
+		font-size: 75px;
+		top: 470px;
+	}
+	.locale{
+		font-family: "PanicStricken";
+		text-transform: uppercase;
+		position: absolute;
+		top: 800px;
+		left: -290px;
+		width: 100%;
+		color: #000;
+		font-size: 120px;
+		display: inline;
+	}
+	p.local{
+		display: inline;
+		font-family: 'PanicStricken';
+		text-transform: uppercase;
+	}
+	.houre{
+		font-family: "PanicStricken";
+		text-transform: uppercase;
+		position: absolute;
+		top: 960px;
+		left: -90px;
+		width: 100%;
+		color: #000;
+		font-size: 120px;
+		display: inline;
+		transform: rotate(-25deg);
+	}
+	p.hour{
+		display: inline;
+		font-family: 'PanicStricken';
+		text-transform: uppercase;
+	}
+</style>
+
+<body>
+	<div ng-app="">
+		<p>Qual a cidade: <input type="text" ng-model="city" id="city"></p>
+		<p>Qual o local: <input type="text" ng-model="local"></p>
+		<p>Hora: <input type="text" ng-model="hour"></p>
+		<button id="gerarfoto">Gerar foto</button>
+		<div class="flag" id="flag">
+			<p ng-bind="city" class="city"></p>
+			<div class="locale">
+				<p ng-bind="local" class="local"></p>
+			</div>
+			<div class="houre">
+				<p ng-bind="hour" class="hour"></p>
+			</div>
+			<img src="img/lambe_sample.png" />
+		</div>
+		<div id="flag-generate"></div>
+	</div>
+</body>
+<script>
+	$( document ).ready(function() {
+		$('#city').keyup(function(){
+			console.log($(this).val().length);
+			if ($(this).val().length >= 12) {
+				$(".city").addClass("city-medium");
+				console.log('medio');
+			}	if ($(this).val().length >= 15) {
+				$(".city").addClass("city-larger");
+				$(".city").removeClass("city-medium");
+				console.log('grande');
+			}	else if ($(this).val().length <= 11) 	{
+				$(".city").removeClass("city-larger");
+				$(".city").removeClass("city-medium");
+			};
+		});
+		$( "#gerarfoto" ).click(function() {
+			html2canvas(document.getElementById('flag'), {
+				useCORS: true,
+				allowTaint: true,
+				letterRendering: true,
+				onrendered: function(canvas) {
+					var ctx = canvas.getContext('2d');
+					ctx.webkitImageSmoothingEnabled = false;
+					ctx.mozImageSmoothingEnabled = false;
+					ctx.imageSmoothingEnabled = false;
+					window.location = canvas.toDataURL('image/png');
+				},
+			});
+		});
+	});
+</script>
+</html>
+

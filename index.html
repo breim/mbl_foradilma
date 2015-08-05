@@ -1,0 +1,139 @@
+<html>
+<head>
+	<title>MBL</title>
+	<meta charset="UTF-8">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script id="angularScript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+	<script src="js/html2canvas.js"></script>
+</head>
+<style type="text/css">
+
+	/* Import fonts */
+	@font-face {
+		font-family: 'GothamBold';
+		src: url('fonts/Gotham-Bold.otf'); /* IE9 Compat Modes */
+	}
+
+	@font-face {
+		font-family: 'GothamBook';
+		src: url('fonts/Gotham-Book.otf'); /* IE9 Compat Modes */
+	}
+
+	@font-face {
+		font-family: 'GothamUltra';
+		src: url('fonts/Gotham-Ultra.otf'); /* IE9 Compat Modes */
+	}
+	/* - */
+
+	#flag{
+		text-align: center;
+	}
+	.flag { 
+		position: relative; 
+		max-width: 1000px;
+		width: 100%; 
+	}
+	.city { 
+		font-family: 'GothamBold';
+		text-transform: uppercase;
+		position: absolute; 
+		top: 390px; 
+		left: 0; 
+		width: 100%; 
+		color: #fff;
+		font-size: 130px;
+	}
+	.city-medium{
+		font-size: 100px;
+	}
+	.city-larger{
+		font-size: 65px;
+		top: 450px;
+	}
+	.locale{
+		font-family: 'GothamBook';
+		text-transform: uppercase;
+		position: absolute; 
+		top: 650px;
+		left: 0; 
+		width: 100%; 
+		color: #fff;
+		font-size: 50px;
+		display: inline;
+	}
+	p.local{
+		display: inline;
+		font-family: 'GothamUltra';
+		text-transform: uppercase;
+	}
+	.houre{
+		font-family: 'GothamBook';
+		text-transform: uppercase;
+		position: absolute; 
+		top: 720px;
+		left: 0; 
+		width: 100%; 
+		color: #fff;
+		font-size: 50px;
+		display: inline;
+	}
+	p.hour{
+		display: inline;
+		font-family: 'GothamUltra';
+		text-transform: uppercase;
+	}
+</style>
+
+<body>
+	<div ng-app="">
+		<p>Qual a cidade: <input type="text" ng-model="city" id="city"></p>
+		<p>Qual o local: <input type="text" ng-model="local"></p>
+		<p>Hora: <input type="text" ng-model="hour"></p>
+		<button id="gerarfoto">Gerar foto</button>
+		<div class="flag" id="flag">
+			<p ng-bind="city" class="city"></p>
+			<div class="locale">
+				Local<p ng-bind="local" class="local"></p>
+			</div>
+			<div class="houre">
+				Horário<p ng-bind="hour" class="hour"></p>
+			</div>
+			<img src="img/sample.png" />
+		</div>
+		<div id="flag-generate"></div>
+	</div>
+</body>
+<script>
+	$( document ).ready(function() {
+		$('#city').keyup(function(){
+			console.log($(this).val().length);
+			if ($(this).val().length >= 12) {
+				$(".city").addClass("city-medium");
+				console.log('medio');
+			}	if ($(this).val().length >= 15) {
+				$(".city").addClass("city-larger");
+				$(".city").removeClass("city-medium");
+				console.log('grande');
+			}	else if ($(this).val().length <= 11) 	{
+				$(".city").removeClass("city-larger");
+				$(".city").removeClass("city-medium");
+			};
+		});
+		$( "#gerarfoto" ).click(function() {
+			html2canvas(document.getElementById('flag'), {
+				useCORS: true,
+				allowTaint: true,
+				letterRendering: true,
+				onrendered: function(canvas) {
+					var ctx = canvas.getContext('2d');
+					ctx.webkitImageSmoothingEnabled = false;
+					ctx.mozImageSmoothingEnabled = false;
+					ctx.imageSmoothingEnabled = false;
+					window.location = canvas.toDataURL('image/png');
+				},
+			});
+		});
+	});
+</script>
+</html>
+

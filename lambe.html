@@ -83,7 +83,8 @@
 		<p>Qual a cidade: <input type="text" ng-model="city" id="city"></p>
 		<p>Qual o local: <input type="text" ng-model="local"></p>
 		<p>Hora: <input type="text" ng-model="hour"></p>
-		<button id="gerarfoto">Gerar foto</button>
+		<a href='' id="gerarfoto">Salvar</a>
+		<a href='#' id="baixar">Baixar</a>
 		<div class="flag" id="flag">
 			<p ng-bind="city" class="city"></p>
 			<div class="locale">
@@ -99,6 +100,7 @@
 </body>
 <script>
 	$( document ).ready(function() {
+		$('#baixar').hide();
 		$('#city').keyup(function(){
 			console.log($(this).val().length);
 			if ($(this).val().length >= 12) {
@@ -123,7 +125,12 @@
 					ctx.webkitImageSmoothingEnabled = false;
 					ctx.mozImageSmoothingEnabled = false;
 					ctx.imageSmoothingEnabled = false;
-					window.location = canvas.toDataURL('image/png');
+					var img = canvas.toDataURL("image/png");
+					$('#baixar').attr({
+        		'download': 'profile-lambe.png',
+        		'href'    : img
+   				});
+   				$("#baixar").get(0).click();
 				},
 			});
 		});

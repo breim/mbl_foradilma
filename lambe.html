@@ -76,14 +76,30 @@
 		font-family: 'PanicStricken';
 		text-transform: uppercase;
 	}
+	.locale-small{
+		left: -250px;
+	}
+	.locale-medium{
+		left: -150px;
+	}
+	.locale-large{
+		font-size: 80px;
+		left:-100px;
+		margin-top: 50px;
+	}
+	.locale-extra{
+		font-size: 60px;
+		left: -100px;
+		margin-top: 50px;
+	}
 </style>
 
 <body>
 	<div ng-app="">
 		<p>Qual a cidade: <input type="text" ng-model="city" id="city"></p>
-		<p>Qual o local: <input type="text" ng-model="local"></p>
+		<p>Qual o local: <input type="text" ng-model="local" id="local"></p>
 		<p>Hora: <input type="text" ng-model="hour"></p>
-		<a href='' id="gerarfoto">Salvar</a>
+		<a href='' id="gerarfoto">Salvar foto</a>
 		<a href='#' id="baixar">Baixar</a>
 		<div class="flag" id="flag">
 			<p ng-bind="city" class="city"></p>
@@ -115,6 +131,34 @@
 				$(".city").removeClass("city-medium");
 			};
 		});
+		$('#local').keyup(function(){
+			console.log($(this).val().length);
+			if ($(this).val().length >= 5) {
+				$(".locale").addClass("locale-small");
+				console.log('small');
+			}else{
+				$(".locale").removeClass("locale-small");
+			}
+			if ($(this).val().length >= 7) {
+				$(".locale").addClass("locale-medium");
+				console.log('medium');
+			}	else{
+				$(".locale").removeClass("locale-medium");
+			}
+			if ($(this).val().length >= 10) {
+				$(".locale").addClass("locale-large");
+				console.log('large');
+			}	else {
+				$(".locale").removeClass("locale-large");
+			}
+			if ($(this).val().length >= 15) {
+				$(".locale").addClass("locale-extra");
+				console.log('extra');
+			}	else {
+				$(".locale").removeClass("locale-extra");
+			}
+		});
+
 		$( "#gerarfoto" ).click(function() {
 			html2canvas(document.getElementById('flag'), {
 				useCORS: true,
@@ -127,10 +171,10 @@
 					ctx.imageSmoothingEnabled = false;
 					var img = canvas.toDataURL("image/png");
 					$('#baixar').attr({
-        		'download': 'profile-lambe.png',
-        		'href'    : img
-   				});
-   				$("#baixar").get(0).click();
+						'download': 'profile-lambe.png',
+						'href'    : img
+					});
+					$("#baixar").get(0).click();
 				},
 			});
 		});

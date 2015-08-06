@@ -87,9 +87,9 @@
 <body>
 	<div ng-app="">
 		<p>Qual a cidade: <input type="text" ng-model="city" id="city"></p>
-		<p>Qual o local: <input type="text" ng-model="local"></p>
-		<p>Hora: <input type="text" ng-model="hour"></p>
-		<a href='#' id="gerarfoto">Salvar</a>
+		<p>Qual o local: <input type="text" ng-model="local" id="local"></p>
+		<p>Hora: <input type="text" ng-model="hour" id="hour"></p>
+		<a href='#' id="gerarfoto">Salvar foto</a>
 		<a href='#' id="baixar">Baixar</a>
 		<div class="flag" id="flag">
 			<p ng-bind="city" class="city"></p>
@@ -133,10 +133,10 @@
 					ctx.imageSmoothingEnabled = false;
 					var img = canvas.toDataURL("image/png");
 					$('#baixar').attr({
-        		'download': 'profile.png',
-        		'href'    : img
-   				});
-   				$("#baixar").get(0).click();
+						'download': 'profile.png',
+						'href'    : img
+					});
+					$("#baixar").get(0).click();
 				},
 			});
 		});
